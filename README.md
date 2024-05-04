@@ -1,15 +1,16 @@
 # Topical App
 
-Write a Topical cards app using Vue.js and the provided starter code.
+Write a Topical app using Vue.js and the provided starter code.
 The app allows users to create posts in a common feed (all posts, by all users, end up in the same feed). 
 
 ## Behavior 
+
+Please refer to the [video](demo.mp4) for a visual representation of the app.
 
 ### Screen organization
 
 The screen should be divided into two columns, one 3/4 wide, and one 1/4 wide. 
 In the left column, the 3/4 wide, there is an area for creating posts, and a list of posts.  In the right column, the 1/4 wide, there is a list of tags. 
-Please refer to the [video](demo.mp4) for a visual representation of the app.
 
 ### Post creation
 
@@ -28,9 +29,13 @@ If the post was created by a user _other_ than the one currently logged in, the 
 
 ### Tags
 
-The app should support tags.  When a post is created, it is parsed.  A tag is a word with an initial `#` character.  For example, in the post `Hello #world`, the tag is `world`.  Thus, the `#` is not part of the tag.  A post can have multiple tags. 
+The app should support tags.  When a post is created, it is parsed.  A tag is a word with an initial `#` character.  For example, in the post `Hello #world`, the tag is `#world`.  A post can have multiple tags. 
 
-The tags should be displayed in the right column, in a `div.tags` element.  Each tag should be displayed in a `button.tag` element. In the example above, there should be an element `button.tag` containing `world` as text.  Initially, all tags are inactive.  When a tag its clicked, its active/inactive state is toggled. 
+The tags should be displayed in the right column, in a `div.tags` element.  Each tag should be displayed in a `button.tag` element, and importantly, for a tag `#world`, the string `world` should be displayed, without the leading `#` (this choice is arbitrary, but having a uniform choice makes testing easier). 
+In the example above, there should be an element `button.tag` containing `world` as text.  
+Again refere to the video for examples. 
+
+Initially, all tags are inactive.  When a tag its clicked, its active/inactive state is toggled. 
 The display logic for posts is as follows: 
 
 - If all tags are inactive, all posts are displayed.
