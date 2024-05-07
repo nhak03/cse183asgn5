@@ -2,8 +2,6 @@
 This file defines the database models
 """
 import datetime
-import re
-
 from .common import db, Field, auth
 from pydal.validators import *
 
