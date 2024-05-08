@@ -4,6 +4,7 @@ This file defines the database models
 import datetime
 from .common import db, Field, auth
 from pydal.validators import *
+import uuid
 
 def get_user_email():
     return auth.current_user.get('email') if auth.current_user else None
@@ -14,4 +15,20 @@ def get_user():
 def get_time():
     return datetime.datetime.utcnow()
 
+def generate_unique_id():
+    return str(uuid.uuid4())
 # Complete. 
+
+db.define_table(
+    'post',
+    Field('user_email', default=get_user_email()),
+    Field('post_content', 'text', default=''),
+    Field('post_id', 'string', default=generate_unique_id())
+)
+
+db.define_table(
+    'tag',
+    Field('name', 'string', default='')
+)
+
+db.commit()
