@@ -7,13 +7,18 @@ app.data = {
     data: function() {
         return {
             posts: [],
-            tags: []
+            tags: [],
+            potential_post: ''
         };
     },
     methods: {
+        make_post(){
+            console.log("You are making a post: ", this.potential_post);
 
+            this.potential_post = '';
+        }
     }
-}
+};
 
 app.vue = Vue.createApp(app.data).mount("#app");
 
