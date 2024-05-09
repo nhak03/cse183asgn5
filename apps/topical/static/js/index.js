@@ -11,7 +11,8 @@ app.data = {
             tags: [],
             potential_post: '',
             post_owner: false,
-            filtered_by: []
+            filtered_by: [],
+            logged_in_email: ''
         };
     },
     methods: {
@@ -95,7 +96,12 @@ app.load_data = function () {
             app.vue.posts = response.data.posts;
             app.vue.org_posts = response.data.posts;
             app.vue.tags = response.data.tags;
+            app.vue.logged_in_email = response.data.logged_in_email;
             console.log("Backend YAY");
+
+            if(app.vue.logged_in_email){
+                console.log("You are logged in as ", app.vue.logged_in_email);
+            }
         }
         else{
             alert("Backend NAY");

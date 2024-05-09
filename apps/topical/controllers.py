@@ -28,8 +28,12 @@ def get_home():
     posts = db().select(orderby=(~db.post.id)).as_list()
     print("Posts: ", posts)
     tags = db().select(orderby=(db.tag.id)).as_list()
+    logged_in_email = get_user_email()
+    if (not logged_in_email):
+        logged_in_email = ''
     print("Tags: ", tags)
-    return dict(status = 200, posts = posts, tags = tags)
+    print("Associated email: ", logged_in_email)
+    return dict(status = 200, posts = posts, tags = tags, logged_in_email = logged_in_email)
 
 def find_hashtags(text):
     hashtags = []
