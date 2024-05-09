@@ -13,9 +13,19 @@ app.data = {
     },
     methods: {
         make_post(){
-            console.log("You are making a post: ", this.potential_post);
-
-            this.potential_post = '';
+            const post = this.potential_post
+            console.log("You are making a post: ", post);
+            axios.post('/make_post', { post_content: post })
+            .then(response => {
+                if(response.status === 200){
+                    console.log("Backend fulfilled our request to make a new post.")
+                    this.potential_post = '';
+                }
+                else{
+                    console.log("error on making post");
+                }
+            
+            })
         }
     }
 };
