@@ -22,13 +22,14 @@
                 <p>Made by {{post.user_email}} on {{post.timestamp}}</p>
               </div>
             </div>
+            <div class="media-right"><button class="delete-button has-text-danger fa-solid fa-trash-can trash" @click="delete_post()">Delete</button></div>
           </div>
         </div>
       </div>
       <div class="column is-one-quarter">
-        
+        <div class="tag-list">
           <button class="tag" :class="{ 'is-success': tag.toggle }" v-for="tag in tags" :key="tag.name" @click="filterBy(tag)">{{tag.name}}</button>
-        
+        </div>
       </div>
     </div>
   </div>

@@ -78,6 +78,9 @@ app.data = {
                     this.filter();
                 }
             }
+        },
+        delete_post(){
+            console.log("Prototype for delete_post");
         }
     }
 };
