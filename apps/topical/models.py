@@ -31,7 +31,8 @@ db.define_table(
 db.define_table(
     'tag',
     Field('name', 'string', default=''),
-    Field('amount', 'integer', default=0)
+    Field('amount', 'integer', default=0),
+    Field('toggle', 'boolean', default='false')
 )
 
 db.commit()

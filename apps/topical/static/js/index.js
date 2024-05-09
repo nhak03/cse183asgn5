@@ -9,7 +9,8 @@ app.data = {
             posts: [],
             tags: [],
             potential_post: '',
-            post_owner: false
+            post_owner: false,
+            filtered_by: []
         };
     },
     methods: {
@@ -29,6 +30,11 @@ app.data = {
                 }
             
             })
+        },
+        filterBy(tag){
+            const inverted = !tag.toggle;
+            console.log("Toggling ", tag.name, " to: ", inverted);
+            tag.toggle = inverted;
         }
     }
 };
