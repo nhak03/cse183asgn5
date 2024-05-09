@@ -25,7 +25,7 @@ def get_home():
 
     print("In the get home")
 
-    posts = db().select(orderby=(db.post.id)).as_list()
+    posts = db().select(orderby=(~db.post.id)).as_list()
     return dict(status = 200, posts = posts, tags = [])
 
 def find_hashtags(text):

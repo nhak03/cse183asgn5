@@ -20,6 +20,8 @@ app.data = {
                 if(response.status === 200){
                     console.log("Backend fulfilled our request to make a new post.")
                     this.potential_post = '';
+
+                    app.load_data();
                 }
                 else{
                     console.log("error on making post");
