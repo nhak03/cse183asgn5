@@ -71,10 +71,41 @@ def make_post():
             # print("Prior: ", previous_amount)
             # print("New: ", stored_tag.amount)
         else:
-            tag_id = db.tag.insert(name = tag, amount = 0)
+            tag_id = db.tag.insert(name = tag, amount = 1)
             if not tag_id:
                 return dict(status = 500, error = "error on tag insertion")
-    
 
+    return dict(status = 200)
 
+@action('/delete_post', method='POST')
+@action.uses(db, auth.user)
+def delete_post():
+    postID_to_delete = request.json.get('post_id')
+    email = request.json.get('post_email')
+
+    print("Deleting post id: ", postID_to_delete)
+    print("Author email: ", email)
+
+    post_to_delete = db(db.post.post_id == postID_to_delete).select().first()
+
+    print("post_to_delete.content: ", post_to_delete.content)
+
+    # print("post_to_delete.tags: ", post_to_delete.tags)
+
+    tags_to_decrement = post_to_delete.tags
+
+    for tag in tags_to_decrement:
+        stored_tag = db(db.tag.name == tag).select().first()
+        if stored_tag:
+            # previous_amount = stored_tag.amount
+            stored_tag.amount -= 1
+            stored_tag.update_record()
+            if(stored_tag.amount <= 0):
+                stored_tag.delete_record()
+        else:
+            return dict(status = 500, error = "error on tag decrementation")
+        
+    post_to_delete.delete_record()
+    db.commit()
+        
     return dict(status = 200)

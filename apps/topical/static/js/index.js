@@ -79,8 +79,27 @@ app.data = {
                 }
             }
         },
-        delete_post(){
-            console.log("Prototype for delete_post");
+        delete_post(post){
+            const post_to_delete = post;
+            if(post_to_delete.user_email === this.logged_in_email){
+                console.log("Post to delete: ", post_to_delete.content)
+                console.log("Deleting on behalf of ", this.logged_in_email);
+
+                axios.post('/delete_post', { post_id: post_to_delete.post_id, post_email: post_to_delete.user_email})
+                .then(response => {
+                    if(response.status === 200){
+                        console.log("Backend fulfilled our request to delete a post.");
+                        app.load_data();
+                    }
+                    else{
+                        console.log("error on deleting post");
+                    }
+                })
+            }
+            else{
+                console.log("Invalid delete called, unmatching emails");
+            }
+            
         }
     }
 };
