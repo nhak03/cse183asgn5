@@ -10,7 +10,6 @@ app.data = {
             org_posts: [], // array used to contain a copy of the entire posts, and then we put the filtered ones into posts[]
             tags: [],
             potential_post: '',
-            post_owner: false,
             filtered_by: [],
             logged_in_email: ''
         };
