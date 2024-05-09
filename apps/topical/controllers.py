@@ -26,7 +26,9 @@ def find_hashtags(text):
     # Iterate over the words and add hashtags to the list
     for word in words:
         if word.startswith("#"):
-            hashtags.append(word)
+            # might have to do additional text cleanup
+            hashtag = word[1:]
+            hashtags.append(hashtag)
     return hashtags
 
 @action('/make_post', method='POST')
@@ -35,7 +37,27 @@ def make_post():
     print("Making a post: ")
     post_content = request.json.get('post_content')
     print("Post to make: ", post_content)
-    print("Tags extracted: ", find_hashtags(post_content))
+    tags_in_post = find_hashtags(post_content)
+
+    print("Tags extracted: ", tags_in_post)
+
+    post_id = db.post.insert(user_email = get_user_email(), post_id = generate_unique_id(), tags = tags_in_post, content = post_content)
+    if post_id:
+        print("New post inserted into table post")
+
+    for tag in tags_in_post:
+        stored_tag = db(db.tag.name == tag).select().first()
+        if stored_tag:
+            previous_amount = stored_tag.amount
+            stored_tag.amount += 1
+            stored_tag.update_record()
+            print("That tag amount incremented by 1")
+            print("Prior: ", previous_amount)
+            print("New: ", stored_tag.amount)
+        else:
+            tag_id = db.tag.insert(name = tag, amount = 0)
+            if tag_id:
+                print("New tag inserted into table tag")
 
 
     return dict(status = 200)
