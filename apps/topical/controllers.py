@@ -39,7 +39,7 @@ def find_hashtags(text):
     for word in words:
         if word.startswith("#"):
             # might have to do additional text cleanup
-            hashtag = word[1:]
+            hashtag = (word[1:]).strip("!,.?")
             hashtags.append(hashtag)
     return hashtags
 
