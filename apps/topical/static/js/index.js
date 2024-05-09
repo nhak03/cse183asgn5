@@ -8,7 +8,8 @@ app.data = {
         return {
             posts: [],
             tags: [],
-            potential_post: ''
+            potential_post: '',
+            post_owner: false
         };
     },
     methods: {

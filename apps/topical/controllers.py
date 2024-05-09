@@ -16,7 +16,7 @@ def index():
 @action('/get_home')
 @action.uses(db, auth.user)
 def get_home():
-    # quick way to clear db tables:
+    # # quick way to clear db tables:
     # db.post.truncate()
     # # Empty the 'tag' table
     # db.tag.truncate()
@@ -26,7 +26,10 @@ def get_home():
     print("In the get home")
 
     posts = db().select(orderby=(~db.post.id)).as_list()
-    return dict(status = 200, posts = posts, tags = [])
+    print("Posts: ", posts)
+    tags = db().select(orderby=(db.tag.id)).as_list()
+    print("Tags: ", tags)
+    return dict(status = 200, posts = posts, tags = tags)
 
 def find_hashtags(text):
     hashtags = []
@@ -51,23 +54,23 @@ def make_post():
     print("Tags extracted: ", tags_in_post)
 
     post_id = db.post.insert(user_email = get_user_email(), post_id = generate_unique_id(), tags = tags_in_post, content = post_content, timestamp = get_time)
-    if post_id:
-        print("New post inserted into table post")
+    if not post_id:
+        return dict(status = 500, error = "error on post insertion")
 
-    # commented out to just test out post insertion logic
-    # for tag in tags_in_post:
-    #     stored_tag = db(db.tag.name == tag).select().first()
-    #     if stored_tag:
-    #         previous_amount = stored_tag.amount
-    #         stored_tag.amount += 1
-    #         stored_tag.update_record()
-    #         print("That tag amount incremented by 1")
-    #         print("Prior: ", previous_amount)
-    #         print("New: ", stored_tag.amount)
-    #     else:
-    #         tag_id = db.tag.insert(name = tag, amount = 0)
-    #         if tag_id:
-    #             print("New tag inserted into table tag")
+    for tag in tags_in_post:
+        stored_tag = db(db.tag.name == tag).select().first()
+        if stored_tag:
+            # previous_amount = stored_tag.amount
+            stored_tag.amount += 1
+            stored_tag.update_record()
+            # print("That tag amount incremented by 1")
+            # print("Prior: ", previous_amount)
+            # print("New: ", stored_tag.amount)
+        else:
+            tag_id = db.tag.insert(name = tag, amount = 0)
+            if not tag_id:
+                return dict(status = 500, error = "error on tag insertion")
+    
 
 
     return dict(status = 200)

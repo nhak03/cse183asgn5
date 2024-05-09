@@ -26,7 +26,9 @@
         </div>
       </div>
       <div class="column is-one-quarter">
-        <h1>Right Side</h1>
+        <div class="tag-list">
+          <button class="tag" v-for="tag in tags" :key="tag.name">{{tag.name}}</button>
+        </div>
       </div>
     </div>
   </div>
