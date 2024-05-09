@@ -24,14 +24,14 @@ db.define_table(
     Field('user_email', default=get_user_email()),
     Field('content', 'text', default=''),
     Field('tags', 'list:string'),
-    Field('post_id', 'string', default=generate_unique_id())
+    Field('post_id', 'string', default=generate_unique_id()),
+    Field('timestamp', 'datetime', default=get_time())
 )
 
 db.define_table(
     'tag',
     Field('name', 'string', default=''),
     Field('amount', 'integer', default=0)
-
 )
 
 db.commit()

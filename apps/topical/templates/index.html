@@ -13,6 +13,18 @@
       <div class="column is-three-quarters">
         <textarea class="textarea" placeholder="Hello world" rows="10" id="post-input"  v-model="potential_post"></textarea>
         <button class="button is-success" id="post-button" @click="make_post()">Post</button>
+
+        <div class="post" v-for="post in posts" :key="post.post_id">
+          <div class="card">
+            <div class="card-content">
+              <div class="content">
+                <p>{{post.content}}</p>
+                <p>Made by {{post.user_email}} on {{post.timestamp}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="column is-one-quarter">
         <h1>Right Side</h1>
